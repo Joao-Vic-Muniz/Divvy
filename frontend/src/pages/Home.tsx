@@ -1,4 +1,9 @@
 import { useMemo, useState } from "react";
+import BrandMark from "../components/BrandMark";
+import ParticipantsManager from "../components/ParticipantsManager";
+import SectionHeading from "../components/SectionHeading";
+import StepCard from "../components/StepCard";
+import type { Participant } from "../types/role";
 
 type Expense = {
   id: number;
@@ -13,19 +18,11 @@ type ReceiptItem = {
   included: boolean;
 };
 
-type Participant = {
-  id: number;
-  name: string;
-  status: "Conta ativa" | "Convidado" | "Link enviado";
-  note: string;
-};
-
 const steps = [
   {
     number: "1",
     title: "Crie o grupo e mande o link",
-    description:
-      "Adicione a galera só pelo nome ou compartilhe o link do rolê.",
+    description: "Adicione a galera só pelo nome ou compartilhe o link do rolê.",
     iconBg: "bg-primary/10 text-primary",
     ring: "hover:ring-primary/25",
     icon: (
@@ -124,6 +121,23 @@ function formatCurrency(value: number) {
   return currency.format(value);
 }
 
+function StatTile({
+  label,
+  value,
+  valueClassName = "text-title",
+}: {
+  label: string;
+  value: string;
+  valueClassName?: string;
+}) {
+  return (
+    <div className="rounded-xl bg-card p-3 ring-1 ring-border">
+      <p className="text-xs text-text/70">{label}</p>
+      <p className={`mt-1 font-title text-lg font-bold ${valueClassName}`}>{value}</p>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tripName, setTripName] = useState("");
   const [startError, setStartError] = useState("");
@@ -135,8 +149,7 @@ export default function Home() {
   const [pixCopied, setPixCopied] = useState(false);
 
   const [receiptItems, setReceiptItems] = useState(initialReceipt);
-  const [participants, setParticipants] = useState(initialParticipants);
-  const [guestName, setGuestName] = useState("");
+  const [participants, setParticipants] = useState<Participant[]>(initialParticipants);
   const [activeStep, setActiveStep] = useState(1);
 
   const displayTripName = tripName.trim() || "Feriado na Praia";
@@ -196,45 +209,12 @@ export default function Home() {
 
   const toggleReceiptItem = (id: number) => {
     setReceiptItems((current) =>
-      current.map((item) =>
-        item.id === id ? { ...item, included: !item.included } : item,
-      ),
+      current.map((item) => (item.id === id ? { ...item, included: !item.included } : item)),
     );
-  };
-
-  const handleAddGuest = () => {
-    const name = guestName.trim();
-    if (!name) return;
-    setParticipants((current) => [
-      ...current,
-      {
-        id: Date.now(),
-        name,
-        status: "Convidado",
-        note: "Lançado sem cadastro",
-      },
-    ]);
-    setGuestName("");
-  };
-
-  const toggleInvite = (id: number) => {
-    setParticipants((current) =>
-      current.map((participant) => {
-        if (participant.id !== id || participant.status === "Conta ativa") return participant;
-        if (participant.status === "Convidado") {
-          return { ...participant, status: "Link enviado", note: "Pode entrar depois pelo link" };
-        }
-        return { ...participant, status: "Convidado", note: "Lançado sem cadastro" };
-      }),
-    );
-  };
-
-  const removeParticipant = (id: number) => {
-    setParticipants((current) => current.filter((participant) => participant.id !== id));
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-bg text-text">
+    <div className="relative overflow-x-hidden">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42rem] overflow-hidden">
         <div className="absolute -left-24 top-[-6rem] h-80 w-80 rounded-full bg-primary/20 blur-3xl animate-float" />
         <div className="absolute right-[-4rem] top-10 h-96 w-96 rounded-full bg-secondary/20 blur-3xl animate-float-slow" />
@@ -242,42 +222,18 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
       </div>
 
-      <nav className="sticky top-0 z-30 border-b border-border/70 bg-card/75 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="group flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-sm font-bold text-white shadow-lg shadow-primary/20 transition group-hover:rotate-6 group-hover:scale-105">
-              D
-            </span>
-            <span className="font-title text-xl font-bold tracking-tight text-title">Divvy</span>
-          </a>
-          <div className="flex items-center gap-2 sm:gap-4">
-            <a
-              href="#"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-text transition hover:bg-bg hover:text-title"
-            >
-              Entrar
-            </a>
-            <a
-              href="#criar-viagem"
-              className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-md shadow-primary/20 transition hover:-translate-y-0.5 hover:bg-primary/90"
-            >
-              Criar Viagem
-            </a>
-          </div>
-        </div>
-      </nav>
-
       <main>
         <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-14 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pb-20 lg:pt-20">
           <div className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-accent" />
-              Sem planilhas. Sem climão.
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-medium text-text shadow-sm backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-secondary" />
+              Ideal para viagens, repúblicas e rolês
             </span>
-            <h1 className="mt-5 max-w-xl text-balance font-title text-4xl font-extrabold leading-[1.05] text-title sm:text-5xl lg:text-6xl">
-              Rache os gastos da viagem{" "}
+
+            <h1 className="mt-5 max-w-2xl text-balance font-title text-4xl font-extrabold leading-[1.05] text-title sm:text-5xl lg:text-6xl">
+              Pare de brigar com a calculadora no{" "}
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                sem dor de cabeça.
+                fim da viagem
               </span>
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-text sm:text-lg">
@@ -405,35 +361,33 @@ export default function Home() {
                   ))}
                 </ul>
 
-                <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl border border-dashed border-border bg-card/70 p-2">
+                <div className="mt-3 grid grid-cols-[1fr_1fr_auto] gap-2 rounded-xl border border-dashed border-border bg-card/70 p-2">
                   <input
                     type="text"
                     value={newExpenseName}
                     onChange={(event) => setNewExpenseName(event.target.value)}
                     placeholder="Novo gasto"
-                    className="rounded-lg border border-border bg-bg px-3 py-2 text-xs text-title outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-xs text-title outline-none focus:border-primary"
                   />
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      inputMode="decimal"
-                      value={newExpenseAmount}
-                      onChange={(event) => setNewExpenseAmount(event.target.value)}
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter") handleAddExpense();
-                      }}
-                      placeholder="Valor"
-                      className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-xs text-title outline-none focus:border-primary"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddExpense}
-                      className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:bg-primary/90"
-                      aria-label="Adicionar gasto"
-                    >
-                      +
-                    </button>
-                  </div>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={newExpenseAmount}
+                    onChange={(event) => setNewExpenseAmount(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") handleAddExpense();
+                    }}
+                    placeholder="Valor"
+                    className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-xs text-title outline-none focus:border-primary"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddExpense}
+                    className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:bg-primary/90"
+                    aria-label="Adicionar gasto"
+                  >
+                    +
+                  </button>
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
@@ -481,47 +435,27 @@ export default function Home() {
 
         <section className="mx-auto max-w-6xl px-6 py-12 lg:py-16">
           <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-wide text-primary">Como funciona</p>
-              <h2 className="mt-2 font-title text-3xl font-bold text-title sm:text-4xl">
-                Três passos para fechar a conta do rolê
-              </h2>
-            </div>
+            <SectionHeading
+              eyebrow="Como funciona"
+              title="Três passos para fechar a conta do rolê"
+              className="max-w-2xl"
+            />
             <p className="text-sm text-text">Toque em um passo para destacar.</p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
-            {steps.map((step, index) => {
-              const active = activeStep === index + 1;
-              return (
-                <button
-                  key={step.number}
-                  type="button"
-                  onClick={() => setActiveStep(index + 1)}
-                  className={`group rounded-3xl border bg-card p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 ${step.ring} ${
-                    active
-                      ? "border-primary/30 ring-4 ring-primary/10"
-                      : "border-border"
-                  }`}
-                >
-                  <div className="mb-4 flex items-center justify-between">
-                    <div
-                      className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${step.iconBg}`}
-                    >
-                      {step.icon}
-                    </div>
-                    <span
-                      className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                        active ? "bg-title text-white" : "bg-bg text-text"
-                      }`}
-                    >
-                      Passo {step.number}
-                    </span>
-                  </div>
-                  <h3 className="font-title text-xl font-semibold text-title">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-text">{step.description}</p>
-                </button>
-              );
-            })}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.number}
+                number={step.number}
+                title={step.title}
+                description={step.description}
+                icon={step.icon}
+                iconBg={step.iconBg}
+                ring={step.ring}
+                active={activeStep === index + 1}
+                onClick={() => setActiveStep(index + 1)}
+              />
+            ))}
           </div>
         </section>
 
@@ -529,13 +463,14 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-2">
             <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
               <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
-              <p className="text-sm font-semibold uppercase tracking-wide text-accent">Divisão Justa</p>
-              <h3 className="mt-2 font-title text-2xl font-bold text-title sm:text-3xl">
-                Quem não bebeu não paga a cerveja
-              </h3>
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-text sm:text-base">
-                Marque item por item quem consumiu cada coisa e veja sua parte atualizar na hora.
-              </p>
+              <SectionHeading
+                eyebrow="Divisão Justa"
+                eyebrowClassName="text-accent"
+                title="Quem não bebeu não paga a cerveja"
+                description="Marque item por item quem consumiu cada coisa e veja sua parte atualizar na hora."
+                titleClassName="text-2xl sm:text-3xl"
+                descriptionClassName="max-w-xl"
+              />
               <div className="mt-6 rounded-2xl border border-border bg-bg p-4">
                 <div className="mb-3 flex items-center justify-between gap-3 text-sm">
                   <span className="font-semibold text-title">Conta do bar</span>
@@ -571,102 +506,29 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-card p-3 ring-1 ring-border">
-                    <p className="text-xs text-text/70">Sua parte</p>
-                    <p className="mt-1 font-title text-lg font-bold text-secondary">
-                      {formatCurrency(includedTotal)}
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-card p-3 ring-1 ring-border">
-                    <p className="text-xs text-text/70">Fora da conta</p>
-                    <p className="mt-1 font-title text-lg font-bold text-accent">
-                      {formatCurrency(excludedTotal)}
-                    </p>
-                  </div>
+                  <StatTile label="Sua parte" value={formatCurrency(includedTotal)} valueClassName="text-secondary" />
+                  <StatTile label="Fora da conta" value={formatCurrency(excludedTotal)} valueClassName="text-accent" />
                 </div>
-                <p className="mt-3 text-xs text-text/80">
-                  Itens desmarcados não entram na sua parte.
-                </p>
+                <p className="mt-3 text-xs text-text/80">Itens desmarcados não entram na sua parte.</p>
               </div>
             </article>
 
             <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
               <div className="pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-secondary/10 blur-2xl" />
-              <p className="text-sm font-semibold uppercase tracking-wide text-secondary">
-                Modo Convidado
-              </p>
-              <h3 className="mt-2 font-title text-2xl font-bold text-title sm:text-3xl">
-                Seu amigo não precisa baixar nada
-              </h3>
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-text sm:text-base">
-                Adicione pessoas pelo nome, envie o link quando quiser e acompanhe quem já entrou.
-              </p>
-              <div className="mt-6 rounded-2xl border border-border bg-bg p-4">
-                <div className="mb-3 flex flex-col gap-2 sm:flex-row">
-                  <input
-                    type="text"
-                    value={guestName}
-                    onChange={(event) => setGuestName(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") handleAddGuest();
-                    }}
-                    placeholder="Adicionar convidado pelo nome"
-                    className="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm text-title outline-none ring-secondary/20 transition placeholder:text-text/50 focus:border-secondary focus:ring-4"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddGuest}
-                    className="rounded-xl bg-secondary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary/90 sm:whitespace-nowrap"
-                  >
-                    Adicionar
-                  </button>
-                </div>
-
-                <ul className="space-y-3">
-                  {participants.map((participant) => (
-                    <li
-                      key={participant.id}
-                      className="flex flex-col gap-3 rounded-xl border border-border bg-card px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
-                    >
-                      <div>
-                        <p className="text-sm font-medium text-title">{participant.name}</p>
-                        <p className="text-xs text-text">{participant.note}</p>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
-                          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                            participant.status === "Conta ativa"
-                              ? "bg-primary/10 text-primary"
-                              : participant.status === "Convidado"
-                                ? "bg-accent/10 text-accent"
-                                : "bg-secondary/10 text-secondary"
-                          }`}
-                        >
-                          {participant.status}
-                        </span>
-                        {participant.status !== "Conta ativa" && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() => toggleInvite(participant.id)}
-                              className="rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-title transition hover:border-secondary/40 hover:text-secondary"
-                            >
-                              {participant.status === "Convidado" ? "Enviar link" : "Marcar convidado"}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => removeParticipant(participant.id)}
-                              className="rounded-lg px-2 py-1 text-xs font-medium text-text/60 transition hover:bg-bg hover:text-accent"
-                            >
-                              Remover
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <SectionHeading
+                eyebrow="Modo Convidado"
+                eyebrowClassName="text-secondary"
+                title="Seu amigo não precisa baixar nada"
+                description="Adicione pessoas pelo nome, envie links individuais e compartilhe o link do grupo para integrar todo mundo."
+                titleClassName="text-2xl sm:text-3xl"
+                descriptionClassName="max-w-xl"
+                className="mb-6"
+              />
+              <ParticipantsManager
+                roleId="feriado-na-praia"
+                participants={participants}
+                onChange={setParticipants}
+              />
             </article>
           </div>
         </section>
@@ -707,9 +569,7 @@ export default function Home() {
       <footer className="border-t border-border/70 bg-card/50">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-text sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary text-xs font-bold text-white">
-              D
-            </span>
+            <BrandMark size="sm" className="text-xs" />
             <p className="font-title font-semibold text-title">Divvy</p>
           </div>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
