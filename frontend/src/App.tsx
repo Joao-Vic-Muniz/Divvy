@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import Home from "./pages/Home";
-import DetalhesRole from "./pages/detalhesRole/DetalhesRole";
-import Perfil from "./pages/perfil/Perfil";
-import Role from "./pages/role/Role";
+import DetalhesRole from "./pages/DetalhesRole";
+import Perfil from "./pages/Perfil";
+import Role from "./pages/Role";
 
 export default function App() {
   return (
