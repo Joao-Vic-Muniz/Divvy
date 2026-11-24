@@ -1,0 +1,820 @@
+
+/* ========================================
+   ROLE - CONFIGURAÇÕES GERAIS
+======================================== */
+
+.role-page {
+  min-height: 100vh;
+  padding: 36px 40px;
+  background: #0b0e14;
+  color: #e8edf5;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.role-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   BOTÕES
+======================================== */
+
+.role-page button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-back-button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0;
+  margin-bottom: 32px;
+  border: none;
+  background: transparent;
+  color: #8994a6;
+  font-size: 13px;
+}
+
+.role-back-button:hover {
+  color: #ffffff;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 11px 17px;
+  border: 1px solid #4385f5;
+  border-radius: 9px;
+  background: #4385f5;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.primary-button:hover {
+  background: #3274e5;
+  border-color: #3274e5;
+}
+
+.secondary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  border: 1px solid #293447;
+  border-radius: 9px;
+  background: #151d29;
+  color: #c4ccda;
+  font-size: 13px;
+}
+
+.secondary-button:hover {
+  background: #1c2737;
+  border-color: #3a4a62;
+}
+
+.full-button {
+  width: 100%;
+}
+
+.text-action {
+  border: none;
+  background: transparent;
+  color: #5794ff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.text-action:hover {
+  color: #8bb5ff;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #8994a6;
+}
+
+.icon-button:hover {
+  background: #222d3c;
+  color: #ffffff;
+}
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.role-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.role-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #45cf98;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #36c98f;
+}
+
+.role-id {
+  margin-left: 5px;
+  color: #677386;
+  font-weight: 400;
+}
+
+.role-header h1 {
+  margin: 13px 0 12px;
+  color: #f3f6fb;
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+}
+
+.role-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  color: #8792a5;
+  font-size: 13px;
+}
+
+.role-meta span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-meta svg {
+  color: #69788e;
+}
+
+.role-edit-button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 15px;
+  border: 1px solid #293447;
+  border-radius: 9px;
+  background: #141b26;
+  color: #c3ccda;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.role-edit-button:hover {
+  background: #1d2838;
+  color: #ffffff;
+}
+
+/* ========================================
+   CARDS DE RESUMO
+======================================== */
+
+.role-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #202938;
+  border-radius: 13px;
+  background: #111722;
+}
+
+.summary-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.summary-card-top > span {
+  color: #929daf;
+  font-size: 12px;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #1b2b42;
+  color: #5794ff;
+}
+
+.summary-value {
+  display: block;
+  margin-top: 17px;
+  overflow: hidden;
+  color: #f2f5fa;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-overflow: ellipsis;
+}
+
+.summary-description {
+  display: block;
+  margin-top: 7px;
+  color: #69768a;
+  font-size: 11px;
+}
+
+/* ========================================
+   NAVEGAÇÃO
+======================================== */
+
+.role-tabs {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  overflow-x: auto;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #202938;
+}
+
+.role-tab {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 1px 15px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #818da0;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.role-tab:hover {
+  color: #dce4f0;
+}
+
+.role-tab.active {
+  border-bottom-color: #4385f5;
+  color: #6ca3ff;
+}
+
+/* ========================================
+   PAINÉIS
+======================================== */
+
+.role-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.role-panel {
+  min-width: 0;
+  padding: 23px;
+  border: 1px solid #202938;
+  border-radius: 13px;
+  background: #111722;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 23px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  color: #edf1f7;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.panel-header p {
+  margin: 6px 0 0;
+  color: #778397;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.panel-add-button {
+  margin-top: 22px;
+}
+
+/* ========================================
+   DESPESAS
+======================================== */
+
+.expense-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.expense-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 0;
+  border-bottom: 1px solid #202938;
+}
+
+.expense-item:first-child {
+  padding-top: 0;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #1b293c;
+  color: #6ba2ff;
+}
+
+.expense-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.expense-info strong {
+  overflow: hidden;
+  color: #e4eaf3;
+  font-size: 13px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expense-info span {
+  color: #788499;
+  font-size: 11px;
+}
+
+.expense-value {
+  color: #e7edf6;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ========================================
+   PARTICIPANTES
+======================================== */
+
+.participant-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 0;
+  border-bottom: 1px solid #202938;
+}
+
+.participant-item:first-child {
+  padding-top: 0;
+}
+
+.participant-item:last-child {
+  border-bottom: none;
+}
+
+.participant-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #30435e;
+  border-radius: 50%;
+  background: #1c2c43;
+  color: #82adf7;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.participant-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.participant-info strong {
+  color: #e6ebf3;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.participant-info span {
+  color: #778397;
+  font-size: 11px;
+}
+
+.participant-check {
+  color: #36c98f;
+}
+
+.role-panel .full-button {
+  margin-top: 20px;
+}
+
+/* ========================================
+   TABELA DE PARTICIPANTES
+======================================== */
+
+.participant-table {
+  width: 100%;
+}
+
+.table-heading,
+.table-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 36px;
+  align-items: center;
+  gap: 15px;
+}
+
+.table-heading {
+  padding: 12px 8px;
+  border-bottom: 1px solid #273142;
+  color: #788499;
+  font-size: 11px;
+}
+
+.table-row {
+  min-height: 69px;
+  padding: 10px 8px;
+  border-bottom: 1px solid #202938;
+  color: #dce4ef;
+  font-size: 12px;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-person {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.table-person strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.presence-status {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.presence-status.present {
+  background: #16342c;
+  color: #55d5a2;
+}
+
+.presence-status.absent {
+  background: #302631;
+  color: #e59b9b;
+}
+
+/* ========================================
+   DIVISÃO DE DESPESAS
+======================================== */
+
+.split-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.split-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.split-summary .role-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.split-summary span {
+  color: #8b97aa;
+  font-size: 12px;
+}
+
+.split-summary strong {
+  color: #f0f4fa;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.split-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.split-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #202938;
+}
+
+.split-item:first-child {
+  padding-top: 0;
+}
+
+.split-item:last-child {
+  border-bottom: none;
+}
+
+.split-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  text-align: right;
+}
+
+.split-result strong {
+  font-size: 12px;
+}
+
+.split-result span {
+  color: #778397;
+  font-size: 11px;
+}
+
+.positive {
+  color: #42cb94;
+}
+
+.negative {
+  color: #f17d87;
+}
+
+/* ========================================
+   MODAL
+======================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.role-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 25px;
+  border: 1px solid #293447;
+  border-radius: 15px;
+  background: #151d29;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #f0f4fa;
+  font-size: 18px;
+}
+
+.modal-header p {
+  margin: 6px 0 0;
+  color: #7d899c;
+  font-size: 12px;
+}
+
+.role-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.role-modal label {
+  margin-top: 8px;
+  color: #aeb9c9;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.role-modal input,
+.role-modal select {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #2a374a;
+  border-radius: 9px;
+  outline: none;
+  background: #0e141e;
+  color: #e9eef6;
+  font-family: inherit;
+  font-size: 13px;
+  transition: border-color 0.2s ease;
+}
+
+.role-modal input::placeholder {
+  color: #657185;
+}
+
+.role-modal input:focus,
+.role-modal select:focus {
+  border-color: #4385f5;
+}
+
+.modal-submit {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 1100px) {
+  .role-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .role-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .role-page {
+    padding: 24px 18px;
+  }
+
+  .role-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .role-header h1 {
+    font-size: 24px;
+  }
+
+  .role-edit-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .role-stats {
+    gap: 10px;
+  }
+
+  .summary-card {
+    padding: 15px;
+  }
+
+  .summary-value {
+    font-size: 19px;
+  }
+
+  .role-tabs {
+    gap: 23px;
+  }
+
+  .role-panel {
+    padding: 18px;
+  }
+
+  .panel-header {
+    align-items: flex-start;
+  }
+
+  .expense-item {
+    gap: 10px;
+  }
+
+  .expense-icon {
+    width: 37px;
+    height: 37px;
+  }
+
+  .expense-value {
+    font-size: 12px;
+  }
+
+  .table-heading,
+  .table-row {
+    grid-template-columns: 1.3fr 1fr 36px;
+  }
+
+  .table-heading span:nth-child(2),
+  .table-row .presence-status {
+    display: none;
+  }
+
+  .split-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .role-page {
+    padding: 20px 14px;
+  }
+
+  .role-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .summary-card {
+    padding: 13px;
+  }
+
+  .summary-value {
+    font-size: 17px;
+  }
+
+  .summary-card-top > span {
+    font-size: 11px;
+  }
+
+  .role-meta {
+    gap: 12px;
+    font-size: 11px;
+  }
+
+  .role-panel {
+    padding: 15px;
+  }
+
+  .split-item {
+    align-items: flex-start;
+  }
+
+  .split-result strong {
+    font-size: 11px;
+  }
+}
