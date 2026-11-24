@@ -1,5 +1,4 @@
-// src/modules/users/user.controller.ts
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { UserService } from "./user.service.js";
 
 export class UserController {
