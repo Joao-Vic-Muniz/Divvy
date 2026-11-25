@@ -3,6 +3,8 @@ import BrandMark from "../components/BrandMark";
 import ParticipantsManager from "../components/ParticipantsManager";
 import SectionHeading from "../components/SectionHeading";
 import StepCard from "../components/StepCard";
+import Reveal from "../components/motion/Reveal";
+import { Stagger, StaggerItem } from "../components/motion/Stagger";
 import type { Participant } from "../types/role";
 
 type Expense = {
@@ -215,17 +217,12 @@ export default function Home() {
 
   return (
     <div className="relative overflow-x-hidden">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42rem] overflow-hidden">
-        <div className="absolute -left-24 top-[-6rem] h-80 w-80 rounded-full bg-primary/20 blur-3xl animate-float" />
-        <div className="absolute right-[-4rem] top-10 h-96 w-96 rounded-full bg-secondary/20 blur-3xl animate-float-slow" />
-        <div className="absolute left-1/2 top-72 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/15 blur-3xl animate-float" />
-        <div className="absolute inset-0 bg-grid opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-      </div>
+     
 
       <main>
         <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-14 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pb-20 lg:pt-20">
           <div className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-medium text-text shadow-sm backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/95 px-3 py-1.5 text-xs font-medium text-text shadow-sm">
               <span className="h-2 w-2 rounded-full bg-secondary" />
               Ideal para viagens, repúblicas e rolês
             </span>
@@ -243,7 +240,7 @@ export default function Home() {
 
             <div
               id="criar-viagem"
-              className="mt-8 rounded-3xl border border-border bg-card/90 p-4 shadow-xl shadow-title/5 backdrop-blur sm:p-5"
+              className="mt-8 rounded-3xl border border-border bg-card/95 p-4 shadow-xl shadow-title/5 sm:p-5"
             >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <label htmlFor="trip-name" className="block text-sm font-semibold text-title">
@@ -318,8 +315,14 @@ export default function Home() {
           </div>
 
           <div className="relative mx-auto w-full max-w-md animate-fade-up [animation-delay:120ms]">
-            <div className="absolute -inset-5 -z-10 rounded-[2.8rem] bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 blur-2xl" />
-            <div className="rounded-[2rem] border border-white/60 bg-card/90 p-4 shadow-2xl shadow-title/10 ring-1 ring-border backdrop-blur sm:p-5">
+            <div
+              className="absolute -inset-4 -z-10 rounded-[2.6rem] opacity-70"
+              style={{
+                background:
+                  "linear-gradient(135deg, color-mix(in oklab, var(--color-primary) 18%, transparent), color-mix(in oklab, var(--color-secondary) 14%, transparent), color-mix(in oklab, var(--color-accent) 16%, transparent))",
+              }}
+            />
+            <div className="rounded-[2rem] border border-white/60 bg-card p-4 shadow-2xl shadow-title/10 ring-1 ring-border sm:p-5">
               <div className="mx-auto mb-4 h-1.5 w-20 rounded-full bg-border" />
               <div className="rounded-[1.5rem] border border-border bg-gradient-to-b from-bg to-white p-4 sm:p-5">
                 <div className="mb-4 flex items-start justify-between gap-3">
@@ -434,135 +437,166 @@ export default function Home() {
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-12 lg:py-16">
-          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <Reveal className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
               eyebrow="Como funciona"
               title="Três passos para fechar a conta do rolê"
               className="max-w-2xl"
             />
             <p className="text-sm text-text">Toque em um passo para destacar.</p>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
+          </Reveal>
+          <Stagger className="grid gap-5 md:grid-cols-3">
             {steps.map((step, index) => (
-              <StepCard
-                key={step.number}
-                number={step.number}
-                title={step.title}
-                description={step.description}
-                icon={step.icon}
-                iconBg={step.iconBg}
-                ring={step.ring}
-                active={activeStep === index + 1}
-                onClick={() => setActiveStep(index + 1)}
-              />
+              <StaggerItem key={step.number}>
+                <StepCard
+                  number={step.number}
+                  title={step.title}
+                  description={step.description}
+                  icon={step.icon}
+                  iconBg={step.iconBg}
+                  ring={step.ring}
+                  active={activeStep === index + 1}
+                  onClick={() => setActiveStep(index + 1)}
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-12 lg:py-16">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
-              <SectionHeading
-                eyebrow="Divisão Justa"
-                eyebrowClassName="text-accent"
-                title="Quem não bebeu não paga a cerveja"
-                description="Marque item por item quem consumiu cada coisa e veja sua parte atualizar na hora."
-                titleClassName="text-2xl sm:text-3xl"
-                descriptionClassName="max-w-xl"
+          <Stagger className="grid gap-6 lg:grid-cols-2" stagger={0.12}>
+            <StaggerItem className="h-full" y={22}>
+              <article className="relative h-full overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
+                <div
+                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-70"
+                style={{
+                  background:
+                    "radial-gradient(circle, color-mix(in oklab, var(--color-accent) 18%, transparent) 0%, transparent 70%)",
+                }}
               />
-              <div className="mt-6 rounded-2xl border border-border bg-bg p-4">
-                <div className="mb-3 flex items-center justify-between gap-3 text-sm">
-                  <span className="font-semibold text-title">Conta do bar</span>
-                  <span className="rounded-full bg-card px-2.5 py-1 text-xs text-text">
-                    seleção interativa
-                  </span>
-                </div>
-                <ul className="space-y-3">
-                  {receiptItems.map((item) => (
-                    <li
-                      key={item.id}
-                      className={`flex items-center justify-between rounded-xl border px-4 py-3 transition ${
-                        item.included
-                          ? "border-secondary/30 bg-secondary/5"
-                          : "border-border bg-card opacity-80"
-                      }`}
-                    >
-                      <label className="flex cursor-pointer items-center gap-3 text-sm font-medium text-title">
-                        <input
-                          type="checkbox"
-                          checked={item.included}
-                          onChange={() => toggleReceiptItem(item.id)}
-                          className="h-4 w-4 rounded border-border accent-secondary"
-                        />
-                        <span className={!item.included ? "line-through decoration-text/40" : ""}>
-                          {item.name}
+                <SectionHeading
+                  eyebrow="Divisão Justa"
+                  eyebrowClassName="text-accent"
+                  title="Quem não bebeu não paga a cerveja"
+                  description="Marque item por item quem consumiu cada coisa e veja sua parte atualizar na hora."
+                  titleClassName="text-2xl sm:text-3xl"
+                  descriptionClassName="max-w-xl"
+                />
+                <div className="mt-6 rounded-2xl border border-border bg-bg p-4">
+                  <div className="mb-3 flex items-center justify-between gap-3 text-sm">
+                    <span className="font-semibold text-title">Conta do bar</span>
+                    <span className="rounded-full bg-card px-2.5 py-1 text-xs text-text">
+                      seleção interativa
+                    </span>
+                  </div>
+                  <ul className="space-y-3">
+                    {receiptItems.map((item) => (
+                      <li
+                        key={item.id}
+                        className={`flex items-center justify-between rounded-xl border px-4 py-3 transition-all duration-200 ease-out ${
+                          item.included
+                            ? "border-secondary/30 bg-secondary/5"
+                            : "border-border bg-card opacity-80"
+                        }`}
+                      >
+                        <label className="flex cursor-pointer items-center gap-3 text-sm font-medium text-title">
+                          <input
+                            type="checkbox"
+                            checked={item.included}
+                            onChange={() => toggleReceiptItem(item.id)}
+                            className="h-4 w-4 rounded border-border accent-secondary"
+                          />
+                          <span className={!item.included ? "line-through decoration-text/40" : ""}>
+                            {item.name}
+                          </span>
+                        </label>
+                        <span className="text-sm font-medium text-text">
+                          {formatCurrency(item.price)}
                         </span>
-                      </label>
-                      <span className="text-sm font-medium text-text">
-                        {formatCurrency(item.price)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  <StatTile label="Sua parte" value={formatCurrency(includedTotal)} valueClassName="text-secondary" />
-                  <StatTile label="Fora da conta" value={formatCurrency(excludedTotal)} valueClassName="text-accent" />
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <StatTile label="Sua parte" value={formatCurrency(includedTotal)} valueClassName="text-secondary" />
+                    <StatTile label="Fora da conta" value={formatCurrency(excludedTotal)} valueClassName="text-accent" />
+                  </div>
+                  <p className="mt-3 text-xs text-text/80">Itens desmarcados não entram na sua parte.</p>
                 </div>
-                <p className="mt-3 text-xs text-text/80">Itens desmarcados não entram na sua parte.</p>
-              </div>
-            </article>
+              </article>
+            </StaggerItem>
 
-            <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
-              <div className="pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-secondary/10 blur-2xl" />
-              <SectionHeading
-                eyebrow="Modo Convidado"
-                eyebrowClassName="text-secondary"
-                title="Seu amigo não precisa baixar nada"
-                description="Adicione pessoas pelo nome, envie links individuais e compartilhe o link do grupo para integrar todo mundo."
-                titleClassName="text-2xl sm:text-3xl"
-                descriptionClassName="max-w-xl"
-                className="mb-6"
+            <StaggerItem className="h-full" y={22}>
+              <article className="relative h-full overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
+                <div
+                className="pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full opacity-70"
+                style={{
+                  background:
+                    "radial-gradient(circle, color-mix(in oklab, var(--color-secondary) 18%, transparent) 0%, transparent 70%)",
+                }}
               />
-              <ParticipantsManager
-                roleId="feriado-na-praia"
-                participants={participants}
-                onChange={setParticipants}
-              />
-            </article>
-          </div>
+                <SectionHeading
+                  eyebrow="Modo Convidado"
+                  eyebrowClassName="text-secondary"
+                  title="Seu amigo não precisa baixar nada"
+                  description="Adicione pessoas pelo nome, envie links individuais e compartilhe o link do grupo para integrar todo mundo."
+                  titleClassName="text-2xl sm:text-3xl"
+                  descriptionClassName="max-w-xl"
+                  className="mb-6"
+                />
+                <ParticipantsManager
+                  roleId="feriado-na-praia"
+                  participants={participants}
+                  onChange={setParticipants}
+                />
+              </article>
+            </StaggerItem>
+          </Stagger>
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-12 lg:py-16">
-          <div className="relative overflow-hidden rounded-[2rem] bg-title px-6 py-12 text-center text-white shadow-xl sm:px-10">
-            <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-primary/40 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-secondary/30 blur-3xl" />
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
-              Bora fechar essa conta
-            </p>
-            <h2 className="relative mx-auto mt-3 max-w-3xl text-balance font-title text-3xl font-bold sm:text-4xl">
-              Próxima viagem marcada? Deixa a conta com a gente.
-            </h2>
-            <p className="relative mx-auto mt-3 max-w-2xl text-sm text-white/80 sm:text-base">
-              Crie seu grupo, registre os gastos e descubra o jeito mais simples de acertar tudo.
-            </p>
-            <div className="relative mt-7 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#criar-viagem"
-                className="inline-flex rounded-xl bg-secondary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-secondary/20 transition hover:-translate-y-0.5 hover:bg-secondary/90"
-              >
-                Criar meu primeiro grupo
-              </a>
-              <a
-                href="https://github.com/Joao-Vic-Muniz/Divvy"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
-              >
-                Ver projeto no GitHub
-              </a>
+          <Reveal y={24}>
+            <div className="relative overflow-hidden rounded-[2rem] bg-title px-6 py-12 text-center text-white shadow-xl sm:px-10">
+              <div
+                className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full opacity-60"
+                style={{
+                  background:
+                    "radial-gradient(circle, color-mix(in oklab, var(--color-primary) 45%, transparent) 0%, transparent 70%)",
+                }}
+              />
+              <div
+                className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full opacity-50"
+                style={{
+                  background:
+                    "radial-gradient(circle, color-mix(in oklab, var(--color-secondary) 40%, transparent) 0%, transparent 70%)",
+                }}
+              />
+              <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                Bora fechar essa conta
+              </p>
+              <h2 className="relative mx-auto mt-3 max-w-3xl text-balance font-title text-3xl font-bold sm:text-4xl">
+                Próxima viagem marcada? Deixa a conta com a gente.
+              </h2>
+              <p className="relative mx-auto mt-3 max-w-2xl text-sm text-white/80 sm:text-base">
+                Crie seu grupo, registre os gastos e descubra o jeito mais simples de acertar tudo.
+              </p>
+              <div className="relative mt-7 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href="#criar-viagem"
+                  className="inline-flex rounded-xl bg-secondary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-secondary/20 transition hover:-translate-y-0.5 hover:bg-secondary/90"
+                >
+                  Criar meu primeiro grupo
+                </a>
+                <a
+                  href="https://github.com/Joao-Vic-Muniz/Divvy"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                >
+                  Ver projeto no GitHub
+                </a>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
 

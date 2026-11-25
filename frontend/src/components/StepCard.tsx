@@ -25,7 +25,7 @@ export default function StepCard({
     <button
       type="button"
       onClick={onClick}
-      className={`group rounded-3xl border bg-card p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 ${ring} ${
+      className={`group h-full w-full rounded-3xl border bg-card p-6 text-left shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 ${ring} ${
         active ? "border-primary/30 ring-4 ring-primary/10" : "border-border"
       }`}
     >

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import BrandMark from "./BrandMark";
 
 const pageLinks = [
@@ -8,11 +9,18 @@ const pageLinks = [
 ];
 
 export default function Navbar() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <nav className="sticky top-0 z-30 border-b border-border/70 bg-card/75 backdrop-blur-xl">
+    <motion.nav
+      initial={reduceMotion ? false : { y: -16, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="sticky top-0 z-30 border-b border-border/70 bg-card/95"
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
         <NavLink to="/" className="group flex items-center gap-3">
-          <BrandMark className="transition group-hover:rotate-6 group-hover:scale-105" />
+          <BrandMark className="transition-transform duration-300 ease-out group-hover:rotate-6 group-hover:scale-105" />
           <span className="font-title text-xl font-bold tracking-tight text-title">Divvy</span>
         </NavLink>
 
@@ -24,7 +32,7 @@ export default function Navbar() {
                 to={link.to}
                 end={link.end}
                 className={({ isActive }) =>
-                  `rounded-lg px-3 py-2 text-sm font-medium transition ${
+                  `rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive
                       ? "bg-bg text-title"
                       : "text-text hover:bg-bg hover:text-title"
@@ -38,7 +46,7 @@ export default function Navbar() {
 
           <NavLink
             to="/#criar-viagem"
-            className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-md shadow-primary/20 transition hover:-translate-y-0.5 hover:bg-primary/90"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-md shadow-primary/20 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-primary/90"
           >
             Criar Rolê
           </NavLink>
@@ -52,7 +60,7 @@ export default function Navbar() {
             to={link.to}
             end={link.end}
             className={({ isActive }) =>
-              `whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition ${
+              `whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                 isActive ? "bg-bg text-title" : "text-text hover:bg-bg hover:text-title"
               }`
             }
@@ -61,6 +69,6 @@ export default function Navbar() {
           </NavLink>
         ))}
       </div>
-    </nav>
+    </motion.nav>
   );
 }
